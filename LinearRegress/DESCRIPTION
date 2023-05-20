@@ -1,0 +1,33 @@
+Package: LinearRegress
+Type: Package
+Title: Simple and Extended Linear Regression for the Boston Housing Dataset
+Version: 0.1.0
+Author: Calvin Kristianto Thayono (120040029), Yahia Ezzat (120040030), Yuhang Li(117010141)
+Maintainer: Calvin Kristianto Thayono (120040029) <120040029@link.cuhk.edu.cn>
+Description: This package provides functions to perform simple and extended linear regression on the Boston Housing dataset. 
+             It includes preprocessing, model training, prediction, evaluation, and cross-validation capabilities. 
+             The package supports standard linear regression, ridge regression, and LASSO for a comprehensive analysis of the dataset.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+Imports:
+    caret,
+    reshape2,
+    rsample,
+    readr,
+    dplyr,
+    tidyr,
+    purrr,
+    recipes,
+    modelr,
+    Metrics,
+    ggplot2,
+    corrplot
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+RoxygenNote: 7.2.3
+Depends: 
+    R (>= 2.10)
+Config/testthat/edition: 3

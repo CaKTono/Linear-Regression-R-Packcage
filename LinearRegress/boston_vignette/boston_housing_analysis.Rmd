@@ -1,0 +1,84 @@
+---
+title: "Boston Housing Analysis"
+output: pdf_document
+vignette: >
+  %\VignetteIndexEntry{Boston Housing Analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+  )
+```
+
+## Introduction
+
+This vignette demonstrates how to use the provided functions to analyze the Boston Housing dataset. The dataset contains information on various housing factors in the Boston area, such as crime rate, average number of rooms, and median value of owner-occupied homes.
+
+## Load and preprocess the data
+
+```{r}
+library(LinearRegress)
+boston_data <- load_boston_data("C:/Users/calvi/Documents/CUHK/course_content_new/Term_6/STA3005/Package development/LinearRegress/data")
+```
+Next, preprocess the data by removing rows with missing values, removing the 'ID' column, centering, and scaling the predictor variables using the preprocess_boston_data() function:
+```{r}
+preprocessed_data <- preprocess_boston_data(boston_data)
+preprocessed_data
+```
+## Train a linear regression model
+Train a linear regression model on the preprocessed training data using the train_linear_regression() function:
+```{r}
+train_result <- train_linear_regression(preprocessed_data$train_data)
+train_result
+```
+## Make predictions
+Use the trained linear regression model to make predictions on the preprocessed test data with the make_predictions() function:
+```{r}
+predictions <- make_predictions(preprocessed_data$test_data, train_result)
+predictions
+```
+## Evaluate the model
+Calculate the Mean Squared Error (MSE) of the predictions using the evaluate_model() function:
+```{r}
+mse <- evaluate_model(predictions)
+print(mse)
+```
+## Perform k-Fold Cross-Validation
+Perform k-Fold cross-validation on the linear regression model to obtain the average MSE across all folds using the cross_validate() function:
+```{r}
+avg_mse <- cross_validate(preprocessed_data$train_data, 5)
+print(avg_mse)
+```
+## Calculate the R-squared Value
+Calculate the R-squared value of the linear regression model using the calculate_r_squared() function:
+```{r}
+r_squared_value <- calculate_r_squared(train_result$model, preprocessed_data$test_data)
+print(r_squared_value)
+```
+## Visualizations
+### Scatter plot of Actual vs. Predicted Values
+Create a scatter plot comparing actual and predicted values of the target variable using the scatter_actual_vs_predicted() function:
+```{r}
+actual_values <- preprocessed_data$test_data$medv
+predicted_values <- predictions$pred_medv
+scatter_actual_vs_predicted(actual_values, predicted_values)
+```
+
+### Boxplot of Residuals
+Create a boxplot displaying the distribution of residuals using the boxplot_residuals() function:
+```{r}
+residuals <- actual_values - predicted_values
+boxplot_residuals(residuals)
+```
+
+### Heatmap of Correlation between Features
+Create a heatmap displaying the correlation between features in the dataset using the heatmap_correlation() function:
+```{r}
+heatmap_correlation(preprocessed_data$train_data)
+```
